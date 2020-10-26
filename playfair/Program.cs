@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace playfair
@@ -20,29 +21,20 @@ namespace playfair
             foreach (char c in keyraw)
             {
                 if (alphabet.Contains(c))
+                {
                     key += c;
+                    alphabet = alphabet.Replace(c.ToString(), string.Empty);
+                }
             }
+
             // Dodaje słowo klucz na początek alfabetu
             string alphabetKey = key + alphabet;
 
-            // Zastosowanie HashSet usuwa powtarzające się znaki
-            var unique = new HashSet<char>(alphabetKey);
-
-            int i = 0;
-            int j = 0;
-            foreach (char c in unique)
+            for (int i = 0; i < CharArray.GetLength(0); i++)
             {
-                if (j < 5)
+                for (int j = 0; j < CharArray.GetLength(1); j++)
                 {
-                    CharArray[i, j] = c;
-                    j++;
-                }
-                else
-                {
-                    j = 0;
-                    i++;
-                    CharArray[i, j] = c;
-                    j++;
+                    CharArray[i, j] = alphabetKey[CharArray.GetLength(1) * i + j];
                 }
             }
 
@@ -139,11 +131,7 @@ namespace playfair
             }
 
             // Zwraca zaszyfrowaną wiadomość
-            string output = string.Empty;
-            foreach (Digram currentDigram in inputArray)
-            {
-                output += currentDigram.FirstChar.ToString() + currentDigram.SecondChar.ToString() + " ";   //jak nie ma ToString() to zwraca liczbę
-            }
+            string output = DisplayDigram(inputArray);
 
             return output;
         }
@@ -165,36 +153,35 @@ namespace playfair
             }
 
             // Dodawanie X pomiedzy powtorzenia
-            string inputnew = "0";  // Nie może być pusty, żeby można było porównać
-            foreach (char c in input)
+            string inputnew = string.Empty;  // Nie może być pusty, żeby można było porównać
+            for (int i = 0; i < input.Length - 1; i++)
             {
-                if (c != inputnew.Last())
-                    inputnew += c;
-                else if (inputnew.Last() != 'X')
-                    inputnew += $"X{c}";
+                if (input[i] == input[i + 1])
+                {
+                    if (input[i] == 'X')
+                        inputnew += $"{input[i]}Y";
+                    else
+                        inputnew += $"{input[i]}X";
+                }
                 else
-                    inputnew += $"Y{c}";
+                    inputnew += input[i];
             }
-            inputnew = inputnew.Substring(1);
+            inputnew += input[input.Length-1];
 
             // Dodawanie X jeśli input nie jest parzysty
-            int stringLength = inputnew.Length;
             if ((inputnew.Length % 2) != 0)
             {
                 inputnew += 'X';
-                stringLength++;
             }
 
             // Stworzenie tablicy
-            char[] arr = inputnew.ToCharArray(0, stringLength);
-            Digram[] inputArray = new Digram[stringLength / 2];
+            char[] arr = inputnew.ToCharArray(0, inputnew.Length);
+            Digram[] inputArray = new Digram[inputnew.Length / 2];
 
             // Wypełnienie tablicy
-            int counter = 0;
-            for (int i = 0; counter < stringLength; i++)
+            for (int i = 0; i*2 < inputnew.Length; i++)
             {
-                inputArray[i] = new Digram(arr[counter], arr[counter + 1]);
-                counter += 2;
+                inputArray[i] = new Digram(arr[i*2], arr[i*2 + 1]);
             }
 
             return inputArray;
