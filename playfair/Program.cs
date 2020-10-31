@@ -136,6 +136,55 @@ namespace playfair
             return output;
         }
 
+        public static string Decrypt(string input, KeyTable keyTable)
+        {
+            Digram[] inputArray = CreateDigramsArray(input);
+            //// Deszyfrowanie
+
+            foreach (Digram currentPair in inputArray)
+            {
+                int[] firstCharPos = keyTable.GetIndex(currentPair.FirstChar);
+                int[] secondCharPos = keyTable.GetIndex(currentPair.SecondChar);
+
+                if (firstCharPos[0] == secondCharPos[0])        // Para tworzy poziomą linię
+                {
+                    if(firstCharPos[1] - 1 < 0)
+                        currentPair.FirstChar = keyTable.CharArray[firstCharPos[0], 5 + (firstCharPos[1] - 1)];
+                    else
+                        currentPair.FirstChar = keyTable.CharArray[firstCharPos[0], firstCharPos[1] - 1];
+
+                    if(secondCharPos[1] - 1 < 0)
+                        currentPair.SecondChar = keyTable.CharArray[secondCharPos[0], 5 + (secondCharPos[1] - 1)];
+                    else
+                        currentPair.SecondChar = keyTable.CharArray[secondCharPos[0], secondCharPos[1] - 1];
+                }
+                else if (firstCharPos[1] == secondCharPos[1]) // Para tworzy pionową linię
+                {
+                    if (firstCharPos[0] - 1 < 0)
+                        currentPair.FirstChar = keyTable.CharArray[ 7 + (firstCharPos[0] - 1), firstCharPos[1]];
+                    else
+                        currentPair.FirstChar = keyTable.CharArray[firstCharPos[0] - 1, firstCharPos[1]];
+
+                    if (secondCharPos[0] - 1 < 0)
+                        currentPair.SecondChar = keyTable.CharArray[7 + (secondCharPos[0] - 1), secondCharPos[1]];
+                    else
+                        currentPair.SecondChar = keyTable.CharArray[secondCharPos[0] - 1, secondCharPos[1]];
+                }
+                else // Para tworzy prostokąt
+                {
+                    int tempPosition1 = firstCharPos[1];
+                    int tempPosition2 = secondCharPos[1];
+                    currentPair.FirstChar = keyTable.CharArray[firstCharPos[0], tempPosition2];
+                    currentPair.SecondChar = keyTable.CharArray[secondCharPos[0], tempPosition1];
+                }
+            }
+
+            // Zwraca zaszyfrowaną wiadomość
+            string output = DisplayDigram(inputArray);
+
+            return output;
+        }
+
         public static Digram[] CreateDigramsArray(string inputraw)
         {
 

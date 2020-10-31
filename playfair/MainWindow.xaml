@@ -7,15 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="button" Content="Run" HorizontalAlignment="Left" Height="48" Margin="337,278,0,0" Click="Button_OnClick" VerticalAlignment="Top" Width="97"/>
+        <Button x:Name="Encrypt_Button" Content="Encrypt" HorizontalAlignment="Left" Height="48" Margin="266,172,0,0" Click="Encrypt_Button_OnClick" VerticalAlignment="Top" Width="97"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="41" Margin="30,86,0,0" TextWrapping="Wrap" Text="Message to encrypt:" VerticalAlignment="Top" Width="119"/>
-        <TextBox x:Name="MessageBox" HorizontalAlignment="Left" Height="86" Margin="160,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203"/>
-        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="45" Margin="30,188,0,0" TextWrapping="Wrap" Text="Key:" VerticalAlignment="Top" Width="119"/>
-        <TextBox x:Name="KeyBox" HorizontalAlignment="Left" Height="69" Margin="160,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203"/>
+        <TextBox x:Name="DecryptedMessageBox" HorizontalAlignment="Left" Height="86" Margin="160,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203"/>
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Height="30" Margin="319,299,0,0" TextWrapping="Wrap" Text="Key:" VerticalAlignment="Top" Width="39" TextAlignment="Center"/>
+        <TextBox x:Name="KeyBox" HorizontalAlignment="Left" Height="30" Margin="363,299,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159"/>
         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Height="41" Margin="403,86,0,0" TextWrapping="Wrap" Text="Encrypted message:" VerticalAlignment="Top" Width="119"/>
         <TextBox x:Name="EncryptedMessageBox" HorizontalAlignment="Left" Height="86" Margin="522,60,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203"/>
-        <TextBox x:Name="DigramBox" HorizontalAlignment="Left" Height="69" Margin="522,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203"/>
-        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Height="41" Margin="403,175,0,0" TextWrapping="Wrap" Text="Digrams:" VerticalAlignment="Top" Width="119"/>
+        <Button x:Name="Decrypt_button" Content="Decrypt" HorizontalAlignment="Left" Height="48" Margin="522,172,0,0" Click="Decrypt_Button_OnClick" VerticalAlignment="Top" Width="97"/>
 
     </Grid>
 </Window>

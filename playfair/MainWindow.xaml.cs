@@ -25,11 +25,16 @@ namespace playfair
             InitializeComponent();
         }
 
-        private void Button_OnClick(object sender, RoutedEventArgs e)
+        private void Encrypt_Button_OnClick(object sender, RoutedEventArgs e)
         {
             KeyTable currentTable = new KeyTable(KeyBox.Text);
-            DigramBox.Text = Program.DisplayDigram(Program.CreateDigramsArray(MessageBox.Text));
-            EncryptedMessageBox.Text = Program.Encrypt(MessageBox.Text, currentTable);
+            EncryptedMessageBox.Text = Program.Encrypt(DecryptedMessageBox.Text, currentTable);
+        }
+
+        private void Decrypt_Button_OnClick(object sender, RoutedEventArgs e)
+        {
+            KeyTable currentTable = new KeyTable(KeyBox.Text);
+            DecryptedMessageBox.Text = Program.Decrypt(EncryptedMessageBox.Text, currentTable);
         }
     }
 }
